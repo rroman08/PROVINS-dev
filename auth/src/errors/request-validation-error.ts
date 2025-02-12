@@ -18,11 +18,4 @@ export class RequestValidationError extends CustomError {
       return { message: err.msg };
     });
   }
-
-  // serializeErrors() { 
-  //   return this.errors.map((error) => {
-  //     return { message: error.msg, 
-  //       field: error.type === 'field' ? error.path: ''};
-  //   });
-  // }
 }

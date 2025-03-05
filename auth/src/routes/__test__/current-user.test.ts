@@ -1,17 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { cookie } from 'express-validator';
 
 it('responds with details about the current user', async () => {  
-  const signUpResponse = await request(app)
-    .post('/api/users/signup')
-    .send({
-      email: 'test@test.com',
-      password: 'password'
-    })
-    .expect(201);
-  
-  const cookie = signUpResponse.get('Set-Cookie');
+  const cookie = await global.signup();
 
   if (!cookie) {
     throw new Error('Cookie not set after signup');

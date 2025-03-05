@@ -15,4 +15,12 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: rrudol01/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
   

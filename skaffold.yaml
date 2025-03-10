@@ -23,4 +23,12 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: rrudol01/products
+      context: products
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
   

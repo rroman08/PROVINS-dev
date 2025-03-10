@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const buildClient = ({ req }) => {
+const BuildClient = ({ req }) => {
   if (typeof window === 'undefined') {
     // On the server -> Requests should be made to http://SERVICENAME.NAMESPACE.svc.cluster.local
     return axios.create({
@@ -16,4 +16,4 @@ const buildClient = ({ req }) => {
   }
 };
 
-export default buildClient;
+export default BuildClient;

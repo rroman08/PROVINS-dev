@@ -51,7 +51,7 @@ it('returns an error if an invalid price is provided', async () => {
     .post('/api/products')
     .set('Cookie', global.signup())
     .send({
-      title: 'Shoes',
+      title: 'Running Shoes',
       price: -1
     })
     .expect(400);
@@ -60,7 +60,7 @@ it('returns an error if an invalid price is provided', async () => {
     .post('/api/products')
     .set('Cookie', global.signup())
     .send({
-      title: 'Shoes'
+      title: 'Running Shoes'
     })
     .expect(400);
 });
@@ -70,7 +70,7 @@ it('creates a product with valid inputs', async () => {
   let products = await Product.find({});
   expect(products.length).toEqual(0);
 
-  const title = 'Shoes';
+  const title = 'Running Shoes';
 
   await request(app)
     .post('/api/products')

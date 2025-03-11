@@ -1,7 +1,11 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError } from '@provins/common';
+import { 
+  errorHandler, 
+  NotFoundError, 
+  currentUser 
+} from '@provins/common';
 
 import { createProductRouter } from './routes/new';
 
@@ -14,6 +18,7 @@ app.use(
     secure: process.env.NODE_ENV !== 'test'
   })
 );
+app.use(currentUser);
 
 app.use(createProductRouter);
 

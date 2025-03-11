@@ -43,7 +43,6 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-
 global.signup = async () => {
   const email = 'test@test.com';
   const password = 'password';

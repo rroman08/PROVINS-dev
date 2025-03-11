@@ -4,10 +4,10 @@ import mongoose from 'mongoose';
 import { app } from '../../app';
 
 it('returns a 404 if the provided userId does not exist', async () => {
-  const id = new mongoose.Types.ObjectId().toHexString();
+  const userId = new mongoose.Types.ObjectId().toHexString();
 
   await request(app)
-    .put(`/api/products/${id}`)
+    .put(`/api/products/${userId}`)
     .set('Cookie', global.signup())
     .send({
       title: 'Running Shoes',

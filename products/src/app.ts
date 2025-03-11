@@ -8,6 +8,7 @@ import {
 } from '@provins/common';
 
 import { createProductRouter } from './routes/new';
+import { showProductRouter } from './routes/show';
 
 const app = express();
 app.set('trust proxy', true);
@@ -21,6 +22,7 @@ app.use(
 app.use(currentUser);
 
 app.use(createProductRouter);
+app.use(showProductRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();

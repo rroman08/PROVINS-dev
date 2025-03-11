@@ -1,14 +1,15 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 
 import { app } from '../../app';
 
 it('returns a 404 if the product is not found', async () => {
-  const response = await request(app)
-    .get('/api/products/testproductid')
-    .send();
-    // .expect(404);
-
-    console.log(response.body);
+  const userId = new mongoose.Types.ObjectId().toHexString();
+  
+  await request(app)
+    .get(`/api/products/${userId}`)
+    .send()
+    .expect(404);
 });
 
 it('returns the product if the product is found', async () => {

@@ -48,7 +48,7 @@ userSchema.pre('save', async function(done) {
   done();
 });
 
-// Wire typescript together with mongoose schema
+// wire typescript together with mongoose schema
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };

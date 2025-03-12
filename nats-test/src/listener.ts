@@ -16,11 +16,17 @@ client.on('connect', () => {
   });
 
   const options = client.subscriptionOptions()
-    .setManualAckMode(true);
+    .setManualAckMode(true)
+    .setDeliverAllAvailable()
+    .setDurableName('listenerDurableName');
 
   // 1st arg name of channel
   // 2nd arg is for queue group
-  const subscription = client.subscribe('product:created', 'listenerQG', options);
+  const subscription = client.subscribe(
+    'product:created', 
+    'queue-group', 
+    options
+  );
 
   // message = event
   subscription.on('message', (msg: Message) => {

@@ -1,5 +1,7 @@
 import nats from 'node-nats-streaming';
 
+console.clear();
+
 const client = nats.connect('provins', 'abc', {
   url: 'http://localhost:4222',
 });

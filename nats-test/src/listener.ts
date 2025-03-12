@@ -1,4 +1,4 @@
-import nats from 'node-nats-streaming';
+import nats, { Message } from 'node-nats-streaming';
 
 console.clear();
 
@@ -12,7 +12,7 @@ client.on('connect', () => {
   const subscription = client.subscribe('product:created');
 
   // message = event
-  subscription.on('message', (msg) => {
+  subscription.on('message', (msg: Message) => {
     const data = msg.getData();
 
     if (typeof data === 'string') {

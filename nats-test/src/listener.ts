@@ -10,6 +10,11 @@ const client = nats.connect('provins', randomBytes(4).toString('hex'), {
 client.on('connect', () => {
   console.log('Listener connected to NATS');
 
+  client.on('close', () => {
+    console.log('NATS connection closed');
+    process.exit();
+  });
+
   const options = client.subscriptionOptions()
     .setManualAckMode(true);
 
@@ -28,3 +33,7 @@ client.on('connect', () => {
     msg.ack();
   });
 });
+
+// Close the connection when the process is terminated (restart or stop)
+process.on('SIGINT', () => client.close());
+process.on('SIGTERM', () => client.close());

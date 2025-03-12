@@ -10,7 +10,12 @@ const client = nats.connect('provins', randomBytes(4).toString('hex'), {
 client.on('connect', () => {
   console.log('Listener connected to NATS');
 
-  const subscription = client.subscribe('product:created');
+  const options = client.subscriptionOptions()
+    .setManualAckMode(true);
+
+  // 1st arg name of channel
+  // 2nd arg is for queue group
+  const subscription = client.subscribe('product:created', 'listenerQG', options);
 
   // message = event
   subscription.on('message', (msg: Message) => {

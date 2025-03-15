@@ -15,29 +15,7 @@ client.on('connect', () => {
     process.exit();
   });
 
-  const options = client.subscriptionOptions()
-    .setManualAckMode(true)
-    .setDeliverAllAvailable()
-    .setDurableName('listenerDurableName');
-
-  // 1st arg name of channel
-  // 2nd arg is for queue group
-  const subscription = client.subscribe(
-    'product:created', 
-    'queue-group', 
-    options
-  );
-
-  // message = event
-  subscription.on('message', (msg: Message) => {
-    const data = msg.getData();
-
-    if (typeof data === 'string') {
-      console.log(`Received event #${msg.getSequence()}, with data: ${data}`);
-    }
-
-    msg.ack();
-  });
+  new ProductCreatedListener(client).listen();
 });
 
 // Close the connection when the process is terminated (restart or stop)

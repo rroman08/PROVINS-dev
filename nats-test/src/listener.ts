@@ -84,3 +84,14 @@ abstract class Listener {
     return typeof data === 'string' ? JSON.parse(data) : JSON.parse(data.toString('utf-8'));
   }
 }
+
+class ProductCreatedListener extends Listener {
+  subject = 'product:created';
+  queueGroupName = 'queue-group';
+
+  onMessage(data: any, msg: Message) {
+    console.log('Event data!', data);
+
+    msg.ack();
+  }
+}

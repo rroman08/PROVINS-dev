@@ -16,7 +16,8 @@ export abstract class Publisher<T extends Event> {
   }
 
   publish(data: T['data']) {
-    this.client.publish(this.subject, data, (err) => {
+    // NATS expects the data to be a string
+    this.client.publish(this.subject, JSON.stringify(data), (err) => {
       if (err) {
         console.error(err);
       } else {

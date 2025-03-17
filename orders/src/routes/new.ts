@@ -9,10 +9,9 @@ import {
 import { body } from 'express-validator';
 
 import { Product } from '../models/product';
+import { Order, OrderStatus } from '../models/order';
 
 const router = express.Router();
-
-// const EXPIRATION_WINDOW_SECONDS = 10 * 60;  // 10 minutes
 
 router.post('/api/orders', 
   requireAuth, 
@@ -39,17 +38,24 @@ router.post('/api/orders',
     }
 
     // Calculate an expiration for the order (how long it will be locked for)
-    const unlock = new Date();
+    const expiration = new Date();
     if (!process.env.EXPIRATION_WINDOW_SECONDS) {
       throw new Error('EXPIRATION_WINDOW_SECONDS is undefined');
     }
-    unlock.setSeconds(unlock.getSeconds() + Number(process.env.EXPIRATION_WINDOW_SECONDS));
+    expiration.setSeconds(expiration.getSeconds() + Number(process.env.EXPIRATION_WINDOW_SECONDS));
 
     // Create order and save it to db
+    const order = Order.build({
+      userId: req.currentUser!.id,
+      status: OrderStatus.Created,
+      expiresAt: expiration,
+      product
+    });
+    await order.save();
     
     // Publish event that order was created
 
-    res.send({});
+    res.status(201).send(order);
   }
 );
 

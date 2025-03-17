@@ -8,6 +8,7 @@ import {
 } from '@provins/common';
 
 import { Product } from '../models/product';
+import { ProductUpdatedPublisher } from '../events/publishers/product-updated';
 
 const router = express.Router();
 

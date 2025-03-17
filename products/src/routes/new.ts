@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 import { requireAuth, validateRequest } from '@provins/common';
 
 import { Product } from '../models/product';
-import { ProductCreatedPublisher } from '../events/publishers/product-created-publisher';
+import { ProductCreatedPublisher } from '../events/publishers/product-created';
 import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();

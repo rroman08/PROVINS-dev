@@ -16,6 +16,14 @@ spec:
         - name: products
           image: rrudol01/products
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'nats://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: provins
             - name: MONGO_URI
               value: 'mongodb://products-mongo-srv:27017/products'
             - name: JWT_KEY

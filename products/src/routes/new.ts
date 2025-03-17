@@ -25,7 +25,7 @@ router.post(
     userId: req.currentUser!.id
   });
   await product.save();
-  new ProductCreatedPublisher(natsWrapper.client).publish({
+  await new ProductCreatedPublisher(natsWrapper.client).publish({
     id: product.id,
     title: product.title,
     price: product.price,

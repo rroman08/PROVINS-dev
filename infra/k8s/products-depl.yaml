@@ -26,8 +26,6 @@ spec:
               value: provins
             - name: MONGO_URI
               value: 'mongodb://products-mongo-srv:27017/products'
-            - name: EXPIRATION_WINDOW_SECONDS
-              value: '600'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

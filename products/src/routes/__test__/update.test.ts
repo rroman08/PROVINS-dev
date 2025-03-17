@@ -2,6 +2,7 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 
 import { app } from '../../app';
+import { natsWrapper } from '../../nats-wrapper';
 
 it('returns a 404 if the provided userId does not exist', async () => {
   const userId = new mongoose.Types.ObjectId().toHexString();
@@ -75,12 +76,9 @@ it('returns a 400 if the user provide an invalid title or price', async () => {
     price: -1,
   })
   .expect(400);
-
-
-
 });
 
-it('updates the ticket provided valid inputs', async () => {
+it('updates the product provided valid inputs', async () => {
   const cookie = global.signup();
 
   const response = await request(app)
@@ -106,4 +104,27 @@ it('updates the ticket provided valid inputs', async () => {
     
   expect(productResponse.body.title).toEqual('Trail Shoes');
   expect(productResponse.body.price).toEqual(79.99);
+});
+
+it ('publishes an event', async () => {
+  const cookie = global.signup();
+
+  const response = await request(app)
+    .post('/api/products')
+    .set('Cookie', cookie)
+    .send({
+      title: 'Running Shoes',
+      price: 99.99,
+    });
+
+  await request(app)
+    .put(`/api/products/${response.body.id}`)
+    .set('Cookie', cookie)
+    .send({
+      title: 'Trail Shoes',
+      price: 79.99,
+    })
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

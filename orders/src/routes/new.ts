@@ -12,6 +12,8 @@ import { Product } from '../models/product';
 
 const router = express.Router();
 
+// const EXPIRATION_WINDOW_SECONDS = 10 * 60;  // 10 minutes
+
 router.post('/api/orders', 
   requireAuth, 
   [
@@ -37,6 +39,11 @@ router.post('/api/orders',
     }
 
     // Calculate an expiration for the order (how long it will be locked for)
+    const unlock = new Date();
+    if (!process.env.EXPIRATION_WINDOW_SECONDS) {
+      throw new Error('EXPIRATION_WINDOW_SECONDS is undefined');
+    }
+    unlock.setSeconds(unlock.getSeconds() + Number(process.env.EXPIRATION_WINDOW_SECONDS));
 
     // Create order and save it to db
     

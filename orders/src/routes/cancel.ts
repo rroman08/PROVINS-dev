@@ -22,6 +22,8 @@ router.patch('/api/orders/:orderId', async (req: Request, res: Response) => {
   order.status = OrderStatus.Cancelled;
   await order.save();
 
+  // publish an cancelled event
+
   res.status(200).send(order);
 });
 

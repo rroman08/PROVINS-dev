@@ -3,8 +3,6 @@ import express, { Request, Response } from 'express';
 import { requireAuth, validateRequest } from '@provins/common';
 import { body } from 'express-validator';
 
-
-
 const router = express.Router();
 
 router.post('/api/orders', 
@@ -13,7 +11,7 @@ router.post('/api/orders',
   body('productId')
     .not()
     .isEmpty()
-    .custom((input: string) => mongoose.Types.ObjectId.isValid(input))  // Is is a valid mongo id? COUPLING!!!
+    .custom((input: string) => mongoose.Types.ObjectId.isValid(input))  // Coupling: check if t is valid a mongoose id
     .withMessage('Provide a valid productId')
   ],
   validateRequest,

@@ -4,13 +4,11 @@ import {
   NotFoundError,
   requireAuth, 
   validateRequest, 
-  OrderStatus, 
   BadRequestError
 } from '@provins/common';
 import { body } from 'express-validator';
 
 import { Product } from '../models/product';
-import { Order } from '../models/order';
 
 const router = express.Router();
 
@@ -27,23 +25,14 @@ router.post('/api/orders',
   async (req: Request, res: Response) => {
     // Find the product the user wants to order in db
     const { productId } = req.body;
-    const product = await Product.findById
+    const product = await Product.findById(productId);
     if (!product) {
       throw new NotFoundError();
     }
 
     // Check if the product is reserved already
-    const orderReserved = await Order.findOne({
-      product: product,
-      status: {
-        $in: [
-          OrderStatus.Created,
-          OrderStatus.AwaitingPayment,
-          OrderStatus.Complete
-        ]
-      }
-    });
-    if (orderReserved) {
+    const isReserved = await product.isReserved();
+    if (isReserved) {
       throw new BadRequestError('Product reserved already');
     }
 

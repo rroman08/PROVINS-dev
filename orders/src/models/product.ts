@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { Order, OrderStatus } from "./order";
 
 interface ProductAttrs {
+  id: string;
   title: string;
   price: number;
 }
@@ -40,7 +41,11 @@ const productSchema = new mongoose.Schema(
 );
 
 productSchema.statics.build = (attrs: ProductAttrs) => {
-  return new Product(attrs);
+  return new Product({
+    _id: attrs.id,
+    title: attrs.title,
+    price: attrs.price,
+  });
 };
 
 productSchema.methods.isReserved = async function () {

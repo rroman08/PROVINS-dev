@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 import { Order, OrderStatus } from './order';
 
@@ -11,6 +12,7 @@ interface ProductAttrs {
 export interface ProductDoc extends mongoose.Document {
   title: string;
   price: number;
+  version: number;
   isReserved(): Promise<boolean>;
 }
 
@@ -39,6 +41,9 @@ const productSchema = new mongoose.Schema(
     },
   }
 );
+
+productSchema.set('versionKey', 'version');
+productSchema.plugin(updateIfCurrentPlugin);
 
 productSchema.statics.build = (attrs: ProductAttrs) => {
   return new Product({

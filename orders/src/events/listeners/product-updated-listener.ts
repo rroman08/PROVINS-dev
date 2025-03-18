@@ -9,14 +9,17 @@ export class ProductUpdatedListener extends Listener<ProductUpdatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: ProductUpdatedEvent['data'], msg: Message) {
-    const product = await Product.findById(data.id);
+    const product = await Product.findOne({
+      _id: data.id,
+      version: data.version - 1,  // if a version with -1 exists in db
+    });
 
     if (!product) {
       throw new Error('Product not found');
     }
 
     const { title, price } = data;
-    product.set({ title: title, price: price});
+    product.set({ title, price});
     await product.save();
     
     msg.ack();

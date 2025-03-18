@@ -6,6 +6,8 @@ import {
 } from '@provins/common';
 
 import { Order, OrderStatus } from '../models/order';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -23,6 +25,13 @@ router.patch('/api/orders/:orderId', async (req: Request, res: Response) => {
   await order.save();
 
   // publish an cancelled event
+  new OrderCancelledPublisher(natsWrapper.client).publish({
+    id: order.id,
+    product: {
+      id: order.product.id,
+      price: order.product.price
+    }
+  });
 
   res.status(200).send(order);
 });

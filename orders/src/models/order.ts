@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-import { OrderStatus } from "@provins/common";
-import { ProductDoc } from "./product";
+import { OrderStatus } from '@provins/common';
+import { ProductDoc } from './product';
 
 export { OrderStatus };
 
@@ -17,6 +17,7 @@ interface OrderDoc extends mongoose.Document {
   status: OrderStatus;
   expiresAt: Date;
   product: ProductDoc;
+  version: number;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {

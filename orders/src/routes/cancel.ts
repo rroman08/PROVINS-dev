@@ -24,6 +24,7 @@ router.patch('/api/orders/:orderId', async (req: Request, res: Response) => {
   // publish an cancelled event
   new OrderCancelledPublisher(natsWrapper.client).publish({
     id: order.id,
+    version: order.version,
     product: {
       id: order.product.id,
       price: order.product.price

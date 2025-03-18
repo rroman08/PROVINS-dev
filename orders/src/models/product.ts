@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-import { Order, OrderStatus } from "./order";
+import { Order, OrderStatus } from './order';
 
 interface ProductAttrs {
   id: string;

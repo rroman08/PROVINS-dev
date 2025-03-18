@@ -38,6 +38,7 @@ router.put(
     await product.save();
     new ProductUpdatedPublisher(natsWrapper.client).publish({
         id: product.id,
+        version: product.version,
         title: product.title,
         price: product.price,
         userId: product.userId

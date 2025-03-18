@@ -1,9 +1,5 @@
 import express, { Request, Response } from 'express';
-import { 
-  NotAuthorisedError, 
-  NotFoundError, 
-  requireAuth 
-} from '@provins/common';
+import { NotAuthorisedError, NotFoundError } from '@provins/common';
 
 import { Order, OrderStatus } from '../models/order';
 import { OrderCancelledPublisher } from '../events/publishers/order-cancelled';
@@ -12,7 +8,8 @@ import { natsWrapper } from '../nats-wrapper';
 const router = express.Router();
 
 router.patch('/api/orders/:orderId', async (req: Request, res: Response) => {
-  const order = await Order.findById(req.params.orderId);
+  const order = await Order.findById(req.params.orderId).populate('product');
+
   if (!order) {
     throw new NotFoundError();
   }

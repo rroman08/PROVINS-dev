@@ -4,13 +4,14 @@ import {
   NotFoundError,
   requireAuth, 
   validateRequest, 
-  BadRequestError
+  BadRequestError,
+  OrderStatus
 } from '@provins/common';
 import { body } from 'express-validator';
 
 import { Product } from '../models/product';
-import { Order, OrderStatus } from '../models/order';
-import { OrderCreatedPublisher } from '../events/publishers/order-created';
+import { Order } from '../models/order';
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
@@ -55,6 +56,16 @@ router.post('/api/orders',
     await order.save();
     
     // Publish event that order was created
+    // new OrderCreatedPublisher(natsWrapper.client).publish({
+    //   id: order.id,
+    //   status: order.status,
+    //   userId: order.userId,
+    //   expiresAt: order.expiresAt.toISOString(),
+    //   product: {
+    //     id: product.id,
+    //     price: product.price,
+    //   },
+    // });
     new OrderCreatedPublisher(natsWrapper.client).publish({
       id: order.id,
       status: order.status,
@@ -62,8 +73,8 @@ router.post('/api/orders',
       expiresAt: order.expiresAt.toISOString(),
       product: {
         id: product.id,
-        price: product.price
-      }
+        price: product.price,
+      },
     });
 
     res.status(201).send(order);

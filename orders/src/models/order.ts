@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 import { OrderStatus } from "@provins/common";
 import { ProductDoc } from "./product";
-import e from "express";
 
 export { OrderStatus };
 

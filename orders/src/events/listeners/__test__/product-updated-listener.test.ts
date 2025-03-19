@@ -50,3 +50,13 @@ it ('acks the message', async () => {
   // Assert ack fn called
   expect(msg.ack).toHaveBeenCalled();
 });
+
+it ('does NOT call ack if out-of-order event', async () => {
+  const { listener, data, msg } = await setup();
+  data.version = 100;
+  try {
+    await listener.onMessage(data, msg);
+  } catch (err) {}
+  // Assert ack fn NOT called
+  expect(msg.ack).not.toHaveBeenCalled();
+});

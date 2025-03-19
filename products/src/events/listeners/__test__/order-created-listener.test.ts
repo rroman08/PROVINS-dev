@@ -39,3 +39,21 @@ const setup = async () => {
 
   return { listener, product, data, msg };
 }
+
+it ('sets orderId of product', async () => {
+  const { listener, product, data, msg } = await setup();
+  // Call onMessage fn
+  await listener.onMessage(data, msg);
+  // Find the product
+  const updatedProduct = await Product.findById(product.id);
+  // Check if orderId is set
+  expect(updatedProduct!.orderId).toEqual(data.id);
+});
+
+it ('acks the message', async () => {
+  const { listener, data, msg } = await setup();
+  // Call onMessage fn
+  await listener.onMessage(data, msg);
+  // Check if ack called
+  expect(msg.ack).toHaveBeenCalled();
+});

@@ -5,6 +5,7 @@ import {
     NotFoundError,
     requireAuth,
     NotAuthorisedError,
+    BadRequestError,
 } from '@provins/common';
 
 import { Product } from '../models/product';
@@ -25,6 +26,10 @@ router.put(
 
     if (!product) {
       throw new NotFoundError();
+    }
+
+    if (product.orderId) {
+      throw new BadRequestError('Product is reserved: Cannot edit');
     }
 
     if (product.userId !== req.currentUser!.id) {

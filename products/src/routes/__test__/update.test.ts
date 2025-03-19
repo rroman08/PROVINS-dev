@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 
 import { app } from '../../app';
 import { natsWrapper } from '../../nats-wrapper';
+import { Product } from '../../models/product';
 
 it('returns a 404 if the provided userId does not exist', async () => {
   const userId = new mongoose.Types.ObjectId().toHexString();
@@ -127,4 +128,29 @@ it ('publishes an event', async () => {
     .expect(200);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
+
+it ('rejects updates if product is reserved already', async () => {
+  const cookie = global.signup();
+
+  const response = await request(app)
+    .post('/api/products')
+    .set('Cookie', cookie)
+    .send({
+      title: 'Running Shoes',
+      price: 99.99,
+    });
+
+  const product = await Product.findById(response.body.id);
+  product!.set({ orderId: new mongoose.Types.ObjectId().toHexString() });
+  await product!.save();
+
+  await request(app)
+    .put(`/api/products/${response.body.id}`)
+    .set('Cookie', cookie)
+    .send({
+      title: 'Trail Shoes',
+      price: 79.99,
+    })
+    .expect(400);
 });

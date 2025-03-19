@@ -1,10 +1,12 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 
 import { app } from '../../app';
 import { Product } from '../../models/product';
 
 it('fetches the order succefully', async () => {  
   const product = Product.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Running Shoes',
     price: 99.99
   });
@@ -29,6 +31,7 @@ it('fetches the order succefully', async () => {
 
 it('returns 401 if user is not authenticated', async () => {
   const product = Product.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Running Shoes',
     price: 99.99
   });

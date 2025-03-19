@@ -1,4 +1,5 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 
 import { app } from '../../app';
 import { Product } from '../../models/product';
@@ -6,18 +7,21 @@ import { Product } from '../../models/product';
 it ('fetches orders for specific user', async () => {
   // Create 3 products
   const productOne = Product.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Running Shoes',
     price: 99.99
   });
   await productOne.save();
 
   const productTwo = Product.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Trail Shoes',
     price: 79.99
   });
   await productTwo.save();
 
   const productThree = Product.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Track Shoes',
     price: 149.99
   });

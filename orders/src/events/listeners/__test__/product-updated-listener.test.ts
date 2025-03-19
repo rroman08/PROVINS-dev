@@ -45,7 +45,7 @@ it ('finds, updates, and saves product', async () => {
 });
 
 it ('acks the message', async () => {
-  const { listener, data, msg, product } = await setup();
+  const { listener, data, msg } = await setup();
   await listener.onMessage(data, msg);
   // Assert ack fn called
   expect(msg.ack).toHaveBeenCalled();

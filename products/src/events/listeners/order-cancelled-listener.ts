@@ -1,22 +1,22 @@
 import { Message } from 'node-nats-streaming';
-import { Listener, OrderCreatedEvent, Subjects } from '@provins/common';
+import { Listener, OrderCancelledEvent, Subjects } from '@provins/common';
 
 import { queueGroupName } from './queue-group-name';
 import { Product } from '../../models/product';
 import { ProductUpdatedPublisher } from '../publishers/product-updated-publisher';
 
-export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
-  subject: Subjects.OrderCreated = Subjects.OrderCreated;
+export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
+  subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
   queueGroupName = queueGroupName;
 
-  async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
-    // Find product that is being reserved by order
+  async onMessage(data: OrderCancelledEvent['data'], msg: Message) {
+    // Find product being cancelled
     const product = await Product.findById(data.product.id);
     if (!product) {
       throw new Error('Product not found');
     }
     // Mark product as reserved -> set orderId property, and save
-    product.set({ orderId: data.id });
+    product.set({ orderId: undefined });  // null does not work very well with ts, hence use undefined
     await product.save();
 
     // Publish product updated event

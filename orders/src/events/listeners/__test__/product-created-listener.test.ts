@@ -7,9 +7,9 @@ import { natsWrapper } from '../../../nats-wrapper';
 import { Product } from '../../../models/product';
 
 const setup = async () => {
-  // instantiate listener
+  // Instantiate listener
   const listener = new ProductCreatedListener(natsWrapper.client);
-  // create dummy  data event
+  // Create dummy  data event
   const data: ProductCreatedEvent['data'] = {
     id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,
@@ -17,7 +17,7 @@ const setup = async () => {
     price: 99.99,
     userId: new mongoose.Types.ObjectId().toHexString()
   };
-  // create dummy msg object
+  // Create dummy msg object
   // @ts-ignore
   const msg: Message = { ack: jest.fn() }
 
@@ -26,9 +26,9 @@ const setup = async () => {
 
 it ('creates and saves a product', async () => {
   const { listener, data, msg } = await setup();
-  // call onMessage fn with data object and msg object
+  // Call onMessage fn with data object and msg object
   await listener.onMessage(data, msg);
-  // assert product created
+  // Assert product created
   const product = await Product.findById(data.id);
   expect(product).toBeDefined();
   expect(product!.title).toEqual(data.title);
@@ -38,6 +38,6 @@ it ('creates and saves a product', async () => {
 it ('acks the message', async () => {
   const { listener, data, msg } = await setup();
   await listener.onMessage(data, msg);
-  // assert ack fn called
+  // Assert ack fn called
   expect(msg.ack).toHaveBeenCalled();
 });

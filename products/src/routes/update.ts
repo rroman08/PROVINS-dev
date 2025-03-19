@@ -8,7 +8,7 @@ import {
 } from '@provins/common';
 
 import { Product } from '../models/product';
-import { ProductUpdatedPublisher } from '../events/publishers/product-updated';
+import { ProductUpdatedPublisher } from '../events/publishers/product-updated-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();

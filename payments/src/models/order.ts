@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { OrderStatus } from '@provins/common';
 
 interface OrderAttrs {
@@ -44,6 +45,9 @@ const orderSchema = new mongoose.Schema({
     },
   },
 });
+
+orderSchema.set('versionKey', 'version');   // change __v to version
+orderSchema.plugin(updateIfCurrentPlugin);  // wired up the plugin
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order({

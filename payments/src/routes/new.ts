@@ -10,6 +10,7 @@ import {
 } from '@provins/common';
 
 import { Order } from '../models/order';
+import stripe from '../stripe';
 // import { Payment } from '../models/payment';
 
 const router = express.Router();
@@ -42,6 +43,12 @@ router.post('/api/payments', requireAuth,
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError('Cannot pay for cancelled order');
     }
+
+    await stripe.charges.create({
+      currency: 'gbp',  // ISO currency code 'gbp'
+      amount: order.price * 100,  // smallest currency unit
+      source: token  // use token as source to be charged
+    });
 
     res.send({ success: true });
   }

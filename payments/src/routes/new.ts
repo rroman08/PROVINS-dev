@@ -47,7 +47,8 @@ router.post('/api/payments', requireAuth,
     await stripe.charges.create({
       currency: 'gbp',  // ISO currency code 'gbp'
       amount: order.price * 100,  // smallest currency unit
-      source: token  // use token as source to be charged
+      source: token  // use token as source to be charged 
+      // 'tok_visa' test token for stripe (always works)
     });
 
     res.send({ success: true });

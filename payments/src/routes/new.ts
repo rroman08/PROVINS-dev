@@ -51,7 +51,7 @@ router.post('/api/payments', requireAuth,
       // 'tok_visa' test token for stripe (always works)
     });
 
-    res.send({ success: true });
+    res.status(204).send({ success: true });
   }
 );  
 

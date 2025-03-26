@@ -18,7 +18,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@provins/common": "^1.0.17",
+    "@provins/common": "^1.0.18",
     "@types/bull": "^3.15.9",
     "bull": "^4.16.5",
     "node-nats-streaming": "^0.3.2",

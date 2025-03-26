@@ -5,7 +5,8 @@ import { OrderStatus } from '@provins/common';
 import { app } from '../../app';
 import { Order } from '../../models/order';
 import stripe from '../../stripe';
-import e from 'express';
+
+jest.mock('../../stripe');
 
 it('returns 404 when trying to purchase a non-existing order', async () => {
   await request(app)
@@ -58,12 +59,11 @@ it('returns 400 when trying to purchase cancelled order', async () => {
 
 it ('returns 204 with valid inputs', async () => {
   const userId = new mongoose.Types.ObjectId().toHexString();
-  const price = Math.floor(Math.random() * 100000);
   const order = Order.build({
     id: new mongoose.Types.ObjectId().toHexString(),
     userId,
     version: 0,
-    price: price,
+    price: 99.99,
     status: OrderStatus.Created
   });
   await order.save();
@@ -76,9 +76,8 @@ it ('returns 204 with valid inputs', async () => {
       token: 'tok_visa'
     }).expect(204);
 
-  const stripeCharges = await stripe.charges.list({ limit: 10 });
-  const stripeCharge = stripeCharges.data.find(charge => charge.amount === price * 100);
-
-  expect(stripeCharge).toBeDefined();
-  expect(stripeCharge!.currency).toEqual('gbp');
+  const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
+  expect(chargeOptions.source).toEqual('tok_visa');
+  expect(chargeOptions.amount).toEqual(9999);
+  expect(chargeOptions.currency).toEqual('gbp');
 });

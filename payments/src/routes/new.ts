@@ -11,7 +11,7 @@ import {
 
 import { Order } from '../models/order';
 import stripe from '../stripe';
-// import { Payment } from '../models/payment';
+import { Payment } from '../models/payment';
 
 const router = express.Router();
 
@@ -43,13 +43,20 @@ router.post('/api/payments', requireAuth,
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError('Cannot pay for cancelled order');
     }
-
-    await stripe.charges.create({
+    
+    const charge = await stripe.charges.create({
       currency: 'gbp',  // ISO currency code 'gbp'
       amount: order.price * 100,  // smallest currency unit
       source: token  // use token as source to be charged 
       // 'tok_visa' test token for stripe (always works)
     });
+
+    // Save payment record
+    const payment = Payment.build({
+      orderId: orderId,
+      stripeId: charge.id
+    });
+    await payment.save();
 
     res.status(204).send({ success: true });
   }

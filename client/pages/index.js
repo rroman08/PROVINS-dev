@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 // index.js is the Landing Page component
 // It shows a message based on whether the user is signed in
 // It is exported as the default component and imported in _app.js
@@ -10,6 +12,11 @@ const LandingPage = ({ currentUser, products }) => {
       <tr key={product.id}>
         <td>{product.title}</td>
         <td>{product.price}</td>
+        <td>
+          <Link href="/products/[productId]" as={`/products/${product.id}`}>
+            See Details...
+          </Link>
+        </td>
       </tr>
     );
   });
@@ -22,6 +29,7 @@ const LandingPage = ({ currentUser, products }) => {
           <tr>
             <th>Title</th>
             <th>Price</th>
+            <th>Want to Purchase</th>
           </tr>
         </thead>
         <tbody>

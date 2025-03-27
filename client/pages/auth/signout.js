@@ -8,7 +8,7 @@ const Signout = () => {
     url: '/api/users/signout',
     method: 'post',
     body: {},
-    onSuccess: () => Router.push('/')   // redirect to the landing page
+    onSuccess: () => Router.push('/')  // redirect to the landing page
   });
   
   useEffect(() => {

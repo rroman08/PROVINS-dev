@@ -12,12 +12,12 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 };
 
 AppComponent.getInitialProps = async (appContext) => {
-  // build an axios client with the context
+  // Build an axios client with the context
   const client = buildClient(appContext.ctx);
-  // make a request to the current user route
-  const { data } = await client.get("/api/users/currentuser");
+  // Make a request to the current user route
+  const { data } = await client.get('/api/users/currentuser');
   
-  // get the initial props of the component
+  // Get the initial props of the component
   let pageProps = {};
   if (appContext.Component.getInitialProps) {
     pageProps = await appContext.Component.getInitialProps(appContext.ctx);

@@ -1,6 +1,8 @@
 // Wildcard route: this will be rendered for any URL that matches /products/:productId
 // The productId will be available in the context object
 
+import Router from 'next/router';
+
 import useRequest from '../../hooks/use-request';
 
 const ProductShow = ({ product }) => {
@@ -10,7 +12,11 @@ const ProductShow = ({ product }) => {
     body: {
       productId: product.id
     },
-    onSuccess: (order) => console.log(order)
+    onSuccess: (order) => Router.push('/orders/[orderId]', `/orders/${order.id}`),
+    onError: (err) => {
+      console.error(err);
+      alert('An error occurred while processing your request.');
+    }
   });
 
   return (

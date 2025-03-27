@@ -22,7 +22,11 @@ AppComponent.getInitialProps = async (appContext) => {
   // Get the initial props of the component
   let pageProps = {};
   if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(appContext.ctx, client, data.currentUser);
+    pageProps = await appContext.Component.getInitialProps(
+      appContext.ctx, 
+      client, 
+      data.currentUser
+    );
   }
 
   return {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
+import Link from 'next/link';
 
 const OrderShow = ({ order, currentUser }) => {
 
@@ -23,7 +24,13 @@ const OrderShow = ({ order, currentUser }) => {
     return (
       <div>
         <h1>Order Details</h1>
-        <div>Item is no longer reserved.</div>
+        <h2>This item is no longer reserved.</h2>
+        <p>
+          Do still want it? 
+          <Link href="/products/[productId]" as={`/products/${order.product.id}`}>
+            Go here...
+          </Link>
+        </p>
       </div>
     );
   }
@@ -31,15 +38,18 @@ const OrderShow = ({ order, currentUser }) => {
   return (
     <div>
       <h1>Order Details</h1>
+      <h2>Item: {order.product.title}</h2>
+      <h3>Price: £{order.product.price}</h3>
       <div>
         Item is reserved. {timeLeft} seconds left to checkout.
         <StripeCheckout 
           token={(token) => console.log(token)}
           stripeKey="pk_test_51R6sbk4JmgAK3URjxT1FcGkdWb7YMcrQS489UCBuPgX6VW30RvLX5JNjKBrCE1zMSv0NkqsPVzN9lT2URfErw4OD00uBPU00Ky"
-          amount={order.price * 100} // Stripe expects the amount smallest currency unit
+          amount={order.product.price * 100} // Stripe expects the amount smallest currency unit
           email={currentUser.email} 
+          // Use Stripe test card number for testing: 4242 4242 4242 4242 with any CVC and date
         />
-        </div>    
+      </div>    
     </div>
   );
 }

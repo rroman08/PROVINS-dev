@@ -1,13 +1,11 @@
 import Link from 'next/link';
 
-// index.js is the Landing Page component
+// index.js is the Landing Page React component
 // It shows a message based on whether the user is signed in
 // It is exported as the default component and imported in _app.js
 // It is rendered in the AppComponent component of _app.js
 const LandingPage = ({ currentUser, products }) => {
-  // console.log(products);
-  // return currentUser ? (<h1>You are signed in</h1>) : (<h1>You are NOT signed in</h1>);
-  const productList = products.map(product => {
+  const productList = products.map((product) => {
     return (
       <tr key={product.id}>
         <td>{product.title}</td>
@@ -32,18 +30,18 @@ const LandingPage = ({ currentUser, products }) => {
             <th>Want to Purchase</th>
           </tr>
         </thead>
-        <tbody>
-          {productList}
-        </tbody>
+        <tbody>{productList}</tbody>
       </table>
     </div>
-  )
+  );
 };
 
 LandingPage.getInitialProps = async (context, client, currentUser) => {
-  // De-structure res into item that is wanted from the response object (data)
+  // Fetches the list of products from the API
+  // The client is the axios instance created in _app.js
+  // The context is the Next.js context object
   const { data } = await client.get('/api/products');
-  // Merges into the props object that are being passed to the LandingPage component
+  // The data is the list of products
   return { products: data };
 }; 
 

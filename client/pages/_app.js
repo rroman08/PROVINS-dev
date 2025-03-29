@@ -1,7 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import buildClient from '../api/build-client'; 
 import Header from '../components/header'; 
 
+// This is the main entry point for the Next.js application
+// It is responsible for rendering the application and passing props to the components
+// It is the main component that wraps all other components
+// It is imported in the pages directory and used to render the app
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
@@ -14,24 +19,21 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 };
 
 AppComponent.getInitialProps = async (appContext) => {
-  // Build an axios client with the context
   const client = buildClient(appContext.ctx);
-  // Make a request to the current user route
   const { data } = await client.get('/api/users/currentuser');
-  
-  // Get the initial props of the component
+
   let pageProps = {};
   if (appContext.Component.getInitialProps) {
     pageProps = await appContext.Component.getInitialProps(
-      appContext.ctx, 
-      client, 
+      appContext.ctx,
+      client,
       data.currentUser
     );
   }
 
   return {
     pageProps,
-    ...data
+    ...data,
   };
 };
 

@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+// Header component to display navigation links based on 
+// user authentication status
 const Header = ({ currentUser }) => {
   const links = [
     !currentUser && { label: 'Sign Up', href: '/auth/signup' },

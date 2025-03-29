@@ -2,9 +2,17 @@ import { useEffect, useState } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import Link from 'next/link';
 
+import useRequest from '../../hooks/use-request';
+
 const OrderShow = ({ order, currentUser }) => {
 
   const [timeLeft, setTimeLeft] = useState(0);
+  const { doRequest, errors } = useRequest({
+    url: '/api/orders/confirm',
+    method: 'post',
+    body: { orderId: order.id },
+    onSuccess: (order) => console.log(order),
+  });
   
   useEffect(() => {
     const getTimeLeft = () => {
@@ -25,8 +33,8 @@ const OrderShow = ({ order, currentUser }) => {
       <div>
         <h1>Order Details</h1>
         <h2>This item is no longer reserved.</h2>
+        <p>Do still want it?</p>
         <p>
-          Do still want it? 
           <Link href="/products/[productId]" as={`/products/${order.product.id}`}>
             Go here...
           </Link>
@@ -43,7 +51,7 @@ const OrderShow = ({ order, currentUser }) => {
       <div>
         Item is reserved. {timeLeft} seconds left to checkout.
         <StripeCheckout 
-          token={(token) => console.log(token)}
+          token={({ id }) => doRequest({ token: id })}
           stripeKey="pk_test_51R6sbk4JmgAK3URjxT1FcGkdWb7YMcrQS489UCBuPgX6VW30RvLX5JNjKBrCE1zMSv0NkqsPVzN9lT2URfErw4OD00uBPU00Ky"
           amount={order.product.price * 100} // Stripe expects the amount smallest currency unit
           email={currentUser.email} 

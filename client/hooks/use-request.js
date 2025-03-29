@@ -8,11 +8,14 @@ const UseRequest = ({ url, method, body, onSuccess }) => {
   const [errors, setErrors] = useState(null);
 
   // doRequest fn is used to make the request
-  const doRequest = async () => {
+  const doRequest = async (props = {}) => {
     try {
       // It sets the errors to null before making the request
       setErrors(null);
-      const response = await axios[method](url, body);
+      const response = await axios[method](
+        url, 
+        {...body, ...props}, // Spread operator to merge body and props
+      );
       // If the request is successful, it calls the onSuccess callback
       // and passes the response data to it
       if (onSuccess) {

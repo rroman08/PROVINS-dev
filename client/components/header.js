@@ -6,6 +6,8 @@ const Header = ({ currentUser }) => {
   const links = [
     !currentUser && { label: 'Sign Up', href: '/auth/signup' },
     !currentUser && { label: 'Sign In', href: '/auth/signin' },
+    currentUser && { label: 'List a New Item', href: '/products/new' },
+    currentUser && { label: 'My Reserved Items', href: '/orders' },
     currentUser && { label: 'Sign Out', href: '/auth/signout' },
   ]
   .filter(linkConfig => linkConfig)

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import Link from 'next/link';
+import Router from 'next/router';
 
 import useRequest from '../../hooks/use-request';
 
@@ -11,7 +12,7 @@ const OrderShow = ({ order, currentUser }) => {
     url: '/api/orders/confirm',
     method: 'post',
     body: { orderId: order.id },
-    onSuccess: (payment) => console.log(payment),
+    onSuccess: () => Router.push('/orders'), // redirect to orders page after successful payment
   });
   
   useEffect(() => {

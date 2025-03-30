@@ -25,7 +25,7 @@ const ProductShow = ({ product }) => {
       <h3>Title: {product.title}</h3>
       <h3>Price: £{product.price}</h3>
       {errors}
-      <button onClick={doRequest} className="btn btn-primary">I want to purchase</button>
+      <button onClick={() => doRequest()} className="btn btn-primary">I want to purchase</button>
     </div>
   );
 }

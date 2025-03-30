@@ -11,7 +11,7 @@ const OrderShow = ({ order, currentUser }) => {
     url: '/api/orders/confirm',
     method: 'post',
     body: { orderId: order.id },
-    onSuccess: (order) => console.log(order),
+    onSuccess: (payment) => console.log(payment),
   });
   
   useEffect(() => {
@@ -57,6 +57,7 @@ const OrderShow = ({ order, currentUser }) => {
           email={currentUser.email} 
           // Use Stripe test card number for testing: 4242 4242 4242 4242 with any CVC and date
         />
+        {errors}
       </div>    
     </div>
   );

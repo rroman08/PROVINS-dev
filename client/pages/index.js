@@ -40,7 +40,9 @@ LandingPage.getInitialProps = async (context, client, currentUser) => {
   // Fetches the list of products from the API
   // The client is the axios instance created in _app.js
   // The context is the Next.js context object
-  const { data } = await client.get('/api/products');
+  const { data } = await client.get('/api/products').catch((err) => {
+    console.log(err.message);
+  });
   // The data is the list of products
   return { products: data };
 }; 

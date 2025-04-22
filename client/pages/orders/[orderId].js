@@ -68,7 +68,9 @@ OrderShow.getInitialProps = async (context, client) => {
   const { orderId } = context.query;
 
   // Fetch order details using the orderId
-  const { data } = await client.get(`/api/orders/${orderId}`);
+  const { data } = await client.get(`/api/orders/${orderId}`).catch((err) => {
+    console.log(err.message);
+  });
 
   return { order: data };
 };

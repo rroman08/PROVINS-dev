@@ -33,7 +33,9 @@ const ProductShow = ({ product }) => {
 ProductShow.getInitialProps = async (context, client) => {
   // context.query is an object that contains the wildcard values
   const { productId } = context.query;
-  const { data } = await client.get(`/api/products/${productId}`);
+  const { data } = await client.get(`/api/products/${productId}`).catch((err) => {
+    console.log(err.message);
+  });
 
   return { product: data };
 };

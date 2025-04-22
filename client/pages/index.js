@@ -21,7 +21,7 @@ const LandingPage = ({ currentUser, products }) => {
 
   return (
     <div>
-      <h1>Products on Offer</h1>
+      <h1>Products Offered</h1>
       <table className="table">
         <thead>
           <tr>

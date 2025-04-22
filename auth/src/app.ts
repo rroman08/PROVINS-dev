@@ -25,7 +25,7 @@ app.use(
   cookieSession({ 
     // This is used to store the session in a cookie
     signed: false,  // This is used to sign the cookie
-    secure: process.env.NODE_ENV !== 'test'
+    secure: false
   })
 );
 

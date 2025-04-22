@@ -12,7 +12,7 @@ const BuildClient = ({ req }) => {
   if (typeof window === 'undefined') {
     // On the server -> requests should be made to http://SERVICENAME.NAMESPACE.svc.cluster.local
     return axios.create({
-      baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+      baseURL: 'http://www.provins-app-final-project.xyz',
       headers: req.headers,
     });
   }

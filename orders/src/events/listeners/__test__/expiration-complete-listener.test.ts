@@ -47,7 +47,7 @@ it ('updates order status to cancelled', async () => {
   expect(updatedOrder!.status).toEqual(OrderStatus.Cancelled);
 });
 
-it ('emits OrderCancelled event', async () => {
+it ('emits order:cancelled event', async () => {
   const { listener, order, data, msg } = await setup();
 
   await listener.onMessage(data, msg);

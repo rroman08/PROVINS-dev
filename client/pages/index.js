@@ -34,10 +34,8 @@ const LandingPage = ({ currentUser, products }) => {
   );
 };
 
-// This function is called on the server side to fetch data before rendering the page
+// Called on the server side to fetch data before rendering the page
 // It is used to fetch the current user and the list of products
-// This route handler is used to get all products that are not reserved
-// It is used by the client to display all available products
 LandingPage.getInitialProps = async (context, client, currentUser) => {
   // Fetches the list of products from the API
   const { data } = await client.get('/api/products').catch((err) => {

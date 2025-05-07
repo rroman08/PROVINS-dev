@@ -3,6 +3,7 @@ import Router from 'next/router';
 
 import useRequest from '../../hooks/use-request';
 
+// Signup component for user authentication
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +14,10 @@ const Signup = () => {
     onSuccess: () => Router.push('/')  // redirect to the landing page
   });
 
+  // onSubmit function is called when the form is submitted
   const onSubmit = async event => {
+    // Prevent the default form submission behaviour, that is, refreshing the page
+    // and call the doRequest function to make the API request
     event.preventDefault();
     doRequest();
   };

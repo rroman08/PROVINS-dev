@@ -5,8 +5,7 @@ import Header from '../components/header';
 
 // This is the main entry point for the Next.js application
 // It is responsible for rendering the application and passing props to the components
-// It is the main component that wraps all other components
-// It is imported in the pages directory and used to render the app
+// The main component wraps all other components
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
@@ -18,6 +17,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
   );
 };
 
+// This function is used to fetch data before rendering the page
 AppComponent.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx);
   const { data } = await client.get('/api/users/currentuser').catch((err) => {

@@ -3,12 +3,14 @@ import Router from 'next/router';
 
 import useRequest from '../../hooks/use-request';
 
+// Signout component for user authentication
 const Signout = () => {
   const { doRequest } = useRequest({
     url: '/api/users/signout',
     method: 'post',
     body: {},
-    onSuccess: () => Router.push('/')  // redirect to the landing page
+    // redirect to the landing page after successful sign out
+    onSuccess: () => Router.push('/')
   });
   
   useEffect(() => {

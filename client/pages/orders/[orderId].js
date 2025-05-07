@@ -5,9 +5,13 @@ import Router from 'next/router';
 
 import useRequest from '../../hooks/use-request';
 
-const OrderShow = ({ order, currentUser }) => {
+// Wildcard route: this will be rendered for any URL that matches /orders/:orderId
+// The orderId will be available in the context object
 
-  const [timeLeft, setTimeLeft] = useState(0);
+// OrderShow component to display order details and handle payment
+const OrderShow = ({ order, currentUser }) => {
+  //
+  const [timeLeft, setTimeLeft] = useState(0);  // 0 means no time left
   const { doRequest, errors } = useRequest({
     url: '/api/orders/confirm',
     method: 'post',
@@ -16,19 +20,22 @@ const OrderShow = ({ order, currentUser }) => {
   });
   
   useEffect(() => {
+    // Function to calculate the time left until the order expires
     const getTimeLeft = () => {
       const millisecondsLeft = new Date(order.expiresAt) - new Date();
       setTimeLeft(Math.round(millisecondsLeft / 1000));  // Convert to seconds
     };
 
-    getTimeLeft();  // Initial call to set the time left immediately
-    const currentTimeId = setInterval(getTimeLeft, 1000);  // Update every second
+    // Initial call to set the time left immediately
+    getTimeLeft();
+    const currentTimeId = setInterval(getTimeLeft, 1000);  // Updates every second
     // Need to shutdown the interval
     return () => {
-      clearInterval(currentTimeId);
+      clearInterval(currentTimeId);  // When returning from the page, clear the interval
     }
   }, [order]);
 
+  // If the order has expired, show a message and a link to the product page
   if (timeLeft < 0) { 
     return (
       <div>
@@ -67,7 +74,7 @@ const OrderShow = ({ order, currentUser }) => {
 OrderShow.getInitialProps = async (context, client) => {
   const { orderId } = context.query;
 
-  // Fetch order details using the orderId
+  // Fetch order details for specific proudct using the orderId
   const { data } = await client.get(`/api/orders/${orderId}`).catch((err) => {
     console.log(err.message);
   });

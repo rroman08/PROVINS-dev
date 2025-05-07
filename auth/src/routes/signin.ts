@@ -30,7 +30,7 @@ router.post('/api/users/signin', [
     }
 
     // It checks if the password is correct
-    // It uses the Password service to compare the hashed password in the database
+    // It uses the password service to compare the hashed password in the database
     // with the password provided in the request
     const passwordsMatch = await Password.compare(existingUser.password, password);
     if (!passwordsMatch) {
@@ -43,7 +43,7 @@ router.post('/api/users/signin', [
       email: existingUser.email
     }, process.env.JWT_KEY!);
 
-    // Store JWT on session object
+    // Store JWT on session object for authentication for follow up requests
     req.session = {
       jwt: userJwt
     };

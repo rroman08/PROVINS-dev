@@ -2,13 +2,13 @@ import mongoose from 'mongoose';
 
 import { app } from './app';
 
-// This index.ts file is the entry point for the auth service
-// It is responsible for starting the service and connecting to the database
-// It imports the app file and starts the server
+// This index.ts starts the authentication service and connects to the database
 const start = async () => {
   console.log('Authentication service starting up...');
   
   // Check if the environment variables are set
+  // JWT_KEY is used for signing JWT tokens
+  // MONGO_URI is the connection string for the MongoDB database
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY is NOT defined');
   }

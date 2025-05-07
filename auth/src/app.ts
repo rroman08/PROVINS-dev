@@ -8,23 +8,23 @@ import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
 import { signUpRouter } from './routes/signup';
 
-// This file is the main entry point for the application
+
+// This app is the main entry point to the auth service that is used in the index.ts file
 // It sets up the express application, middleware, and routes
 // It also handles errors and not found routes
 // It is built using TypeScript and Express.js
 // It uses cookie-session for session management
-// It application uses express-async-errors for handling async errors
 
 const app = express();
-// This is a proxy for the ingress-nginx controller
-// It is used to handle SSL termination and forwarding requests to the application
-// It is used in the Kubernetes cluster to handle incoming requests
+
+// This is used to trust the proxy for secure cookies
+// It is used when the app is behind a reverse proxy like Nginx
 app.set('trust proxy', true);
 app.use(express.json());
 app.use(
   cookieSession({ 
     // This is used to store the session in a cookie
-    signed: false,  // This is used to sign the cookie
+    signed: false,
     secure: false
   })
 );

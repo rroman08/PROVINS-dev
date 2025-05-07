@@ -21,7 +21,6 @@ export class Password {
   }
 
   // Compare a supplied password with a stored hashed password
-  // The stored password is split into the hashed part and the salt
   // The supplied password is hashed with the same salt and compared with the 
   // stored hashed password
   static async compare(storedPassword: string, suppliedPassword: string) {

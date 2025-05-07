@@ -3,12 +3,9 @@ import { promisify } from 'util';
 
 const scryptAsync = promisify(scrypt);
 
-/**
- * Password hashing and comparison utility.
- * 
- * This class provides methods to hash a password and compare a supplied password
- * with a stored hashed password using the scrypt algorithm.
- */
+// Password hashing and comparison utility
+// This class provides methods to hash a password and compare a supplied password
+// with a stored hashed password using the scrypt algorithm.
 export class Password {
   // Hash a password using scrypt algorithm
   // The password is salted with a random value to enhance security

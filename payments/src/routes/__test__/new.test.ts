@@ -9,7 +9,7 @@ import stripe from '../../stripe';
 
 jest.mock('../../stripe');
 
-it('returns 404 when trying to purchase a non-existing order', async () => {
+it('returns 404 when trying to purchase a NON-existing order', async () => {
   await request(app)
     .post('/api/payments')
     .set('Cookie', global.signup())

@@ -6,7 +6,7 @@ import { Product } from '../../models/product';
 import { Order, OrderStatus } from '../../models/order';
 import { natsWrapper } from '../../nats-wrapper';
 
-it ('returs an error if the product does not exist', async () => {
+it ('returs an error if the product does NOT exist', async () => {
   const productId = new mongoose.Types.ObjectId();
 
   await request(app)
@@ -54,7 +54,7 @@ it ('reserves the product successfully', async () => {
     .expect(201);
 });
 
-it ('emits an order created event', async () => {
+it ('emits an order:created event', async () => {
   const product = Product.build({
     id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Running Shoes',

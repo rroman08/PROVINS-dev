@@ -5,7 +5,7 @@ it('responds with details about the current user', async () => {
   const cookie = await global.signup();
 
   if (!cookie) {
-    throw new Error('Cookie not set after signup');
+    throw new Error('Cookie NOT set after signup');
   }
 
   const response = await request(app)
@@ -17,7 +17,7 @@ it('responds with details about the current user', async () => {
   expect(response.body.currentUser.email).toEqual('test@test.com');
 });
 
-it('responds with null if not authenticated', async () => {
+it('responds with null if NOT authenticated', async () => {
   const response = await request(app)
     .get('/api/users/currentuser')
     .send()

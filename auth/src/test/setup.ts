@@ -7,14 +7,6 @@ declare global {
   var signup: () => Promise<string[]>;
 }
 
-// declare global {
-// 	namespace NodeJS {
-// 		export interface Global {
-// 			signin(): Promise<string[]>; 
-// 		}
-// 	}
-// } 
-
 let mongo: any;
 
 beforeAll(async () => {

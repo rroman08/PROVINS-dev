@@ -5,7 +5,7 @@ import { app } from '../../app';
 import { natsWrapper } from '../../nats-wrapper';
 import { Product } from '../../models/product';
 
-it('returns a 404 if the provided userId does not exist', async () => {
+it('returns a 404 if the provided user id does NOT exist', async () => {
   const userId = new mongoose.Types.ObjectId().toHexString();
 
   await request(app)
@@ -18,7 +18,7 @@ it('returns a 404 if the provided userId does not exist', async () => {
     .expect(404);
 });
 
-it('returns a 401 if the user is not authenticated', async () => {
+it('returns a 401 if user is NOT authenticated', async () => {
   const id = new mongoose.Types.ObjectId().toHexString();
 
   await request(app)
@@ -30,7 +30,7 @@ it('returns a 401 if the user is not authenticated', async () => {
     .expect(401);
 });
 
-it('returns a 401 if the user does not own the product', async () => {
+it('returns a 401 if user does NOT own the product', async () => {
   const response = await request(app)
     .post('/api/products')
     .set('Cookie', global.signup())
@@ -49,7 +49,7 @@ it('returns a 401 if the user does not own the product', async () => {
     .expect(401);
 });
 
-it('returns a 400 if the user provide an invalid title or price', async () => {
+it('returns a 400 if user provides an invalid title or price', async () => {
   const cookie = global.signup();
 
   const response = await request(app)
@@ -79,7 +79,7 @@ it('returns a 400 if the user provide an invalid title or price', async () => {
   .expect(400);
 });
 
-it('updates the product provided valid inputs', async () => {
+it('updates the product when provided with valid inputs', async () => {
   const cookie = global.signup();
 
   const response = await request(app)
@@ -107,7 +107,7 @@ it('updates the product provided valid inputs', async () => {
   expect(productResponse.body.price).toEqual(79.99);
 });
 
-it ('publishes an event', async () => {
+it ('publishes product:updated event', async () => {
   const cookie = global.signup();
 
   const response = await request(app)

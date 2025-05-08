@@ -40,7 +40,7 @@ const setup = async () => {
   return { listener, product, data, msg };
 }
 
-it ('sets orderId of product', async () => {
+it ('sets order id of product', async () => {
   const { listener, product, data, msg } = await setup();
   // Call onMessage fn
   await listener.onMessage(data, msg);
@@ -50,7 +50,7 @@ it ('sets orderId of product', async () => {
   expect(updatedProduct!.orderId).toEqual(data.id);
 });
 
-it ('acks the message', async () => {
+it ('acks message', async () => {
   const { listener, data, msg } = await setup();
   // Call onMessage fn
   await listener.onMessage(data, msg);
@@ -58,7 +58,7 @@ it ('acks the message', async () => {
   expect(msg.ack).toHaveBeenCalled();
 });
 
-it ('publishes product updated event', async () => {
+it ('publishes product:updated event', async () => {
   const { listener, data, msg } = await setup();
   // Call onMessage fn
   await listener.onMessage(data, msg);

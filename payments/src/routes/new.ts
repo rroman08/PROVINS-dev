@@ -15,6 +15,9 @@ import { Payment } from '../models/payment';
 import { PaymentCreatedPublisher } from '../events/publishers/payment-created-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
+// This route is responsible for creating a charge
+// It will be called when a user wants to pay for an order
+
 const router = express.Router();
 
 router.post('/api/payments', requireAuth,
@@ -32,12 +35,15 @@ router.post('/api/payments', requireAuth,
   async (req: Request, res: Response) => {
     const { token, orderId } = req.body;
 
+    // Find the order by id that was extracted from the request body
     const order = await Order.findById(orderId);
 
     if (!order) {
       throw new NotFoundError();
     }
 
+    // Check if current user is the same as the order user
+    // (important because it prevents users from paying for other users' orders)
     if (order.userId !== req.currentUser!.id) {
       throw new NotAuthorisedError();
     }
@@ -46,6 +52,7 @@ router.post('/api/payments', requireAuth,
       throw new BadRequestError('Cannot pay for cancelled order');
     }
     
+    // Use the stripe library to create a charge
     const charge = await stripe.charges.create({
       currency: 'gbp',  // ISO currency code 'gbp'
       amount: order.price * 100,  // smallest currency unit

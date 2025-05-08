@@ -8,6 +8,8 @@ import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
+// This route handles the creation of a new product
+// It requires authentication and validates the request body
 router.post(
   '/api/products', 
   requireAuth, [

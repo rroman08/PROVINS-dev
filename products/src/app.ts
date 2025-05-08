@@ -12,13 +12,15 @@ import { showProductRouter } from './routes/show';
 import { indexProductRouter } from './routes/index';
 import { updateProductRouter } from './routes/update';
 
+// This is the main application file for the products service
+// It sets up the express application, middleware, and routes
 const app = express();
 app.set('trust proxy', true);
 app.use(express.json());
 app.use(
   cookieSession({ 
     signed: false,
-    secure: process.env.NODE_ENV !== 'test'
+    secure: false
   })
 );
 app.use(currentUser);

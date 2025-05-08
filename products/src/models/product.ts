@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
+// This file defines the Product model and its schema
 interface ProductAttrs {
   title: string;
   price: number;
@@ -47,6 +48,9 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+// This plugin is used to handle optimistic concurrency control
+// It adds a version key to the schema and updates it automatically
+// when a document is updated
 productSchema.set('versionKey', 'version');
 productSchema.plugin(updateIfCurrentPlugin);
 

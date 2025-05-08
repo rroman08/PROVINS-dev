@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
-// Header component to display navigation links based on 
-// user authentication status
+// Header component to display navigation links based on user authentication status
 const Header = ({ currentUser }) => {
   const links = [
     !currentUser && { label: 'Sign Up', href: '/auth/signup' },
@@ -10,7 +9,9 @@ const Header = ({ currentUser }) => {
     currentUser && { label: 'My Orders', href: '/orders' },
     currentUser && { label: 'Sign Out', href: '/auth/signout' },
   ]
-  .filter(linkConfig => linkConfig)
+  .filter(linkConfig => linkConfig)  // Filter out any undefined links
+  // Map over the filtered links to create an array of JSX elements
+  // <Link> component is used to create a client-side navigation link
   .map(({ label, href }) => {
     return (
       <li key={href} className="nav-item">

@@ -4,12 +4,13 @@ import { OrderStatus } from '@provins/common';
 
 import { app } from '../../app';
 import { Order } from '../../models/order';
-import { Payment } from '../../models/payment';
-import stripe from '../../stripe';
+
+// This version of test creates a mock payment and mock charge
+// and does not use a real Stripe test token and charge
 
 jest.mock('../../stripe');
 
-it('returns 404 when trying to purchase a non-existing order', async () => {
+it('returns 404 when trying to purchase a NON-existing order', async () => {
   await request(app)
     .post('/api/payments')
     .set('Cookie', global.signup())

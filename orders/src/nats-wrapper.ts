@@ -1,8 +1,10 @@
 import nats, { Stan } from 'node-nats-streaming';
 
+// This class wraps the NATS client to provide a singleton instance for the application
 class NatsWrapper {
   private _client?: Stan;
 
+  // Getter for the NATS client
   get client() {
     if (!this._client) {
       throw new Error('Must connect to NATS before it can be accessed');
@@ -11,6 +13,8 @@ class NatsWrapper {
     return this._client;
   }
 
+  // Connect to NATS with the provided NATS cluster ID, client ID, and URL
+  // This method returns a promise that resolves when the connection is established
   connect(clusterId: string, clientId: string, url: string) {
     this._client = nats.connect(clusterId, clientId, { url });
 
@@ -27,4 +31,5 @@ class NatsWrapper {
   }
 }
 
+// Create an instance of the NatsWrapper class and export it
 export const natsWrapper = new NatsWrapper();

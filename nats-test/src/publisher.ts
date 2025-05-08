@@ -2,6 +2,7 @@ import nats from 'node-nats-streaming';
 
 import { ProductCreatedPublisher } from './events/product-created-publisher';
 
+// Test connect base-publisher for prototyping purposes
 console.clear();
 
 const client = nats.connect('provins', 'abc', {

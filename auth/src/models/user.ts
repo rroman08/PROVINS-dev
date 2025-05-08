@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
 }, {
   // toJSON option is used to customise the JSON representation of the document
   // The transform function modifies the output by adding an 'id' field
-  // and removing the '_id', 'password', and '__v' fields
+  // and removing the '_id', 'password', and '__v' fields (will do own versioning)
   toJSON: {
     transform(doc, ret) {
       ret.id = ret._id;

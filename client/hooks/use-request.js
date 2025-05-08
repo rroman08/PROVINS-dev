@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 // This hook is used to make HTTP requests
-// It takes in a URL, HTTP method, request body, and an optional success callback
+// Hook takes in a URL, HTTP method, request body, and an optional success callback
 // It returns a function to make the request and any errors that occur
 const UseRequest = ({ url, method, body, onSuccess }) => {
   const [errors, setErrors] = useState(null);
@@ -16,17 +16,14 @@ const UseRequest = ({ url, method, body, onSuccess }) => {
         url, 
         {...body, ...props}, // Spread operator to merge body and props
       );
-      // If the request is successful, it calls the onSuccess callback
-      // and passes the response data to it
+      // If request is successful and callback was passed, onSuccess callback is called
       if (onSuccess) {
         onSuccess(response.data);
       }
 
       return response.data;
     } catch (error) {
-      // It catches any errors that occur during the request
-      // and sets the errors state to an alert with the error messages
-      // It maps over the error messages and displays them in a list
+      // If error occurs, list out errors to be displayed to user
       setErrors(
         <div className="alert alert-danger">
           <h4>Oh no! Something went wrong...</h4>

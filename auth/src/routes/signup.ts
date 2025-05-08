@@ -38,12 +38,11 @@ router.post(
       email: user.email
     }, process.env.JWT_KEY!);
 
-    // Store JWT on session object
+    // Store JWT on session object, so user can authenticate for follow-up requests
     req.session = {
       jwt: userJwt
     };
 
-    // Send the created user as a response
     // The response includes the user object, which contains the user's
     // id and email. The password is not included in the response
     res.status(201).send(user);

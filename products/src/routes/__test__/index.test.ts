@@ -11,7 +11,7 @@ const createProduct = () => {
     });
 };
 
-it('it can fetch a list of products', async () => {
+it('fetches a list of products', async () => {
   await createProduct();
   await createProduct();
   await createProduct();

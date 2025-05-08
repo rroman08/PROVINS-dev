@@ -6,6 +6,7 @@ import { ProductDoc } from './product';
 
 export { OrderStatus };
 
+// This is the order model and is used to create and update orders in the database
 interface OrderAttrs {
   userId: string;
   status: OrderStatus;
@@ -25,6 +26,8 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
   build(attrs: OrderAttrs): OrderDoc;
 }
 
+// The order is linked to a prodcut through the productId field
+// The order is linked to a user through the userId field
 const orderSchema = new mongoose.Schema(
   {
     userId: {
@@ -55,6 +58,8 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
+// Use the updateIfCurrentPlugin to handle versioning of the order model
+// This is used to prevent out-of-order messages from causing concurrency issues
 orderSchema.set('versionKey', 'version');
 orderSchema.plugin(updateIfCurrentPlugin);
 

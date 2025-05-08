@@ -4,7 +4,7 @@ import { app } from '../../app';
 import { Product } from '../../models/product';
 import { natsWrapper } from '../../nats-wrapper';
 
-it('has a route handler listening to /api/products for post requests', async () => {
+it('handles route by listening to /api/products for post requests', async () => {
   const response = await request(app)
     .post('/api/products')
     .send({});
@@ -12,14 +12,14 @@ it('has a route handler listening to /api/products for post requests', async () 
   expect(response.status).not.toEqual(404);
 });
 
-it('can only be accessed if the user is signed in', async () => {
+it('can only be accessed if user is signed in', async () => {
   await request(app)
     .post('/api/products')
     .send({})
     .expect(401);
 });
 
-it('returns a status other than 401 if the user is signed in', async () => {
+it('returns a status OTHER THAN 401 if user is signed in', async () => {
   const response = await request(app)
     .post('/api/products')
     .set('Cookie', global.signup())
@@ -88,7 +88,7 @@ it('creates a product with valid inputs', async () => {
   expect(products[0].title).toEqual(title);
 });
 
-it ('publishes an event', async () => {
+it ('publish event:created event', async () => {
   const title = 'Running Shoes';
 
   await request(app)

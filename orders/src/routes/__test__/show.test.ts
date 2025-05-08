@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { app } from '../../app';
 import { Product } from '../../models/product';
 
-it('fetches the order succefully', async () => {  
+it('fetches the order successfully', async () => {  
   const product = Product.build({
     id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Running Shoes',
@@ -29,7 +29,7 @@ it('fetches the order succefully', async () => {
   expect(fetchedOrderResponse.body.product.id).toEqual(product.id);
 });
 
-it('returns 401 if user is not authenticated', async () => {
+it('returns 401 if user is NOT authenticated', async () => {
   const product = Product.build({
     id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Running Shoes',

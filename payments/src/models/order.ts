@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { OrderStatus } from '@provins/common';
 
+// This is the order model for the payments service
+// It is a "replica" of the order model in the orders service
+// Hence, versioning is implemented to handle concurrency issues
+
 interface OrderAttrs {
   id: string;
   status: OrderStatus;
@@ -36,7 +40,7 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  // version is used to handle concurrency issues but done automatically by mongoose
+  // Versioning is used to handle concurrency issues (done automatically by mongoose)
 }, {
   toJSON: {
     transform(doc, ret) {
@@ -47,7 +51,7 @@ const orderSchema = new mongoose.Schema({
 });
 
 orderSchema.set('versionKey', 'version');   // change __v to version
-orderSchema.plugin(updateIfCurrentPlugin);  // wired up the plugin
+orderSchema.plugin(updateIfCurrentPlugin);  // wire up the plugin
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order({

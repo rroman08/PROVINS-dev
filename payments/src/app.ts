@@ -9,19 +9,25 @@ import {
 
 import { createChargeRouter } from './routes/new';
 
+
+// This is the application entry point for the payments service
+// It sets up the express application, middleware, and routes
+// It also handles errors and authentication
 const app = express();
 app.set('trust proxy', true);
 app.use(express.json());
 app.use(
   cookieSession({ 
     signed: false,
-    secure: process.env.NODE_ENV !== 'test'
+    secure: false
   })
 );
+
+// The currentUser middleware checks for a valid JWT in the cookie session
 app.use(currentUser);
-
+// The createChargeRouter handles the creation of new charges
 app.use(createChargeRouter);
-
+// The NotFoundError is thrown for any routes that are not found
 app.all('*', async (req, res) => {
   throw new NotFoundError();
 });

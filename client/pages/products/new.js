@@ -3,10 +3,10 @@ import Router from 'next/router';
 
 import userRequest from '../../hooks/use-request';
 
+// This component is used to create a new product
 const NewProduct = () => {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
-  // Configuring the useRequest hook
   const { doRequest, errors } = userRequest({
     url: '/api/products',
     method: 'post',

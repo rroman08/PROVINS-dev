@@ -2,14 +2,19 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
+// setup for jest testing
+
+// To declare it here as global is a workaround to avoid TypeScript errors
 declare global {
   var signup: () => string[];
 }
 
+// Use mock for nats wrapper
 jest.mock('../nats-wrapper');
 
 let mongo: any;
 
+// Before all tests, start up a new in-memory database
 beforeAll(async () => {
   process.env.JWT_KEY! = 'testtesttest';
 
@@ -19,6 +24,7 @@ beforeAll(async () => {
   await mongoose.connect(mongoUri, {});
 });
 
+// Clear all mocks and delete all collections before each test
 beforeEach(async () => {
   jest.clearAllMocks();
   if (mongoose.connection.db) {
@@ -30,6 +36,7 @@ beforeEach(async () => {
   } 
 });
 
+// Close the in-memory database after all tests so there is no memory leak
 afterAll(async () => {
   if (mongo) {
     await mongo.stop();
@@ -37,6 +44,9 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+// Handles the signup process for testing
+// This function creates a new user and returns a cookie
+// that can be used to authenticate the user in subsequent requests
 global.signup = () => {
   // Build a JWT payload. { id, email }
   const payload = {

@@ -1,3 +1,4 @@
+// OrderIndex component to display a list of orders
 const OrderIndex = ({ orders }) => {
   return (
     <ul>
@@ -13,6 +14,7 @@ const OrderIndex = ({ orders }) => {
 }
 
 OrderIndex.getInitialProps = async (context, client) => {
+  // Fetch all orders for the current user
   const { data } = await client.get('/api/orders').catch((err) => {
     console.log(err.message);
   });

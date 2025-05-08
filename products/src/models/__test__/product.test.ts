@@ -22,10 +22,10 @@ it ('implements optimistic concurrency control (OCC)', async () => {
     return;
   }
 
-  throw new Error('*** This should not be reached ***');
+  throw new Error('>>>This should not be reached<<<');
 });
 
-it ('increments the version correctly', async () => {
+it ('increments version correctly', async () => {
   const product = Product.build({
     title: 'Running Shoes',
     price: 99.99,

@@ -2,6 +2,8 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
+// This is a global setup file for Jest tests
+// It sets up a MongoDB in-memory server and a global function for signing up users
 declare global {
   var signup: () => string[];
 }
@@ -10,6 +12,7 @@ jest.mock('../nats-wrapper');
 
 let mongo: any;
 
+// beforeAll sets up the in-memory MongoDB server before all tests
 beforeAll(async () => {
   process.env.JWT_KEY! = 'testtesttest';
 
@@ -19,6 +22,9 @@ beforeAll(async () => {
   await mongoose.connect(mongoUri, {});
 });
 
+// beforeEach clears all mocks and deletes all collections in the 
+// in-memory MongoDB server before each test
+// This ensures that each test starts with a clean state
 beforeEach(async () => {
   jest.clearAllMocks();
   if (mongoose.connection.db) {
@@ -30,6 +36,8 @@ beforeEach(async () => {
   } 
 });
 
+// afterAll closes the in-memory MongoDB server after all tests
+// This ensures that the server is properly shut down and all resources are released
 afterAll(async () => {
   if (mongo) {
     await mongo.stop();
@@ -37,6 +45,8 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+// This function is used to sign up a user and return a cookie
+// that can be used to authenticate the user in tests
 global.signup = () => {
   // Build a JWT payload. { id, email }
   const payload = {

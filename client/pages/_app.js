@@ -5,7 +5,7 @@ import Header from '../components/header';
 
 // This is the main entry point for the Next.js application
 // It is responsible for rendering the application and passing props to the components
-// The main component wraps all other components
+// Main component wraps all other components
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>

@@ -8,7 +8,7 @@ import { OrderCancelledListener } from './events/listeners/order-cancelled-liste
 // This index.ts starts the payments service, connects to NATS and MongoDB, and sets up the event listeners
 const start = async () => {
 
-  console.log('Starting up Payment service...');
+  console.log('Payment service starting up...');
 
   // Check if the required environment variables are set
   if (!process.env.JWT_KEY) {

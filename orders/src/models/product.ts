@@ -3,6 +3,9 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 import { Order, OrderStatus } from './order';
 
+// This is the product model and is used to create and update products in the database
+// It is a cross-service replication of the product model in the products service
+// and is used to keep track of the products in the orders service
 interface ProductAttrs {
   id: string;
   title: string;

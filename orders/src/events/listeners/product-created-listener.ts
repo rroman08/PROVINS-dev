@@ -4,6 +4,7 @@ import { Listener, ProductCreatedEvent, Subjects } from '@provins/common';
 import { Product } from '../../models/product';
 import { queueGroupName } from './queue-group-name';
 
+// This listener listens for product:created and creates the product in the database
 export class ProductCreatedListener extends Listener<ProductCreatedEvent> {
   subject: Subjects.ProductCreated = Subjects.ProductCreated;
   queueGroupName = queueGroupName;

@@ -16,8 +16,12 @@ import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
-const EXPIRATION_WINDOW_SECONDS = 10 * 60;  // 10 minutes
+// Order expiration time is set to 10 minutes
+// This means that if the order is not completed within this time frame,
+// it will be automatically cancelled and the product will be released for sale again
+const EXPIRATION_WINDOW_SECONDS = 10 * 60;
 
+// This route handler is responsible for creating a new order
 router.post('/api/orders', 
   requireAuth, 
   [

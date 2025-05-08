@@ -1,6 +1,6 @@
 import nats, { Stan } from 'node-nats-streaming';
 
-// This class wraps the NATS client to provide a singleton instance accross the application
+// This class wraps the NATS client to provide a singleton instance for the application
 class NatsWrapper {
   private _client?: Stan;
 

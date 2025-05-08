@@ -14,6 +14,8 @@ import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
+// This route handles the update of a product
+// It checks if the product exists, if it is reserved, and if the user is authorised to update it
 router.put(
   '/api/products/:id', 
   requireAuth, [
@@ -32,6 +34,7 @@ router.put(
       throw new BadRequestError('Product is reserved: Cannot edit');
     }
 
+    // Only if the user is the owner of the product, can she update it
     if (product.userId !== req.currentUser!.id) {
       throw new NotAuthorisedError();
     }

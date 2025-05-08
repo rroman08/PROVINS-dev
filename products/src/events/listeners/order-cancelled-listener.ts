@@ -5,10 +5,14 @@ import { queueGroupName } from './queue-group-name';
 import { Product } from '../../models/product';
 import { ProductUpdatedPublisher } from '../publishers/product-updated-publisher';
 
+// This class listens for order:cancelled events and updates the product accordingly
+// It extends the Listener class and sets the subject to OrderCancelled
+// It also sets the queue group name to the current service
 export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
   subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
   queueGroupName = queueGroupName;
 
+  // This method is called when an order:cancelled event is received
   async onMessage(data: OrderCancelledEvent['data'], msg: Message) {
     // Find product being cancelled
     const product = await Product.findById(data.product.id);

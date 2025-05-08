@@ -8,7 +8,7 @@ import { OrderCancelledListener } from './events/listeners/order-cancelled-liste
 // This index.ts file is the entry point for the products service
 // It connects to the database, sets up the NATS client, and starts the express server
 const start = async () => {
-  console.log('Products service starting up...');
+  console.log('Products service starting up....');
   
   // Check if the required environment variables are set
   if (!process.env.JWT_KEY) {

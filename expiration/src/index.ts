@@ -4,7 +4,7 @@ import { OrderCreatedListener } from './events/listeners/order-created-listener'
 // index.ts starts the expiration service
 // It connects to NATS and sets up the OrderCreatedListener
 const start = async () => {
-  console.log('Expiration service starting up...');
+  console.log('Expiration service starting up....');
   
   if (!process.env.NATS_CLUSTER_ID) {
     throw new Error('NATS_CLUSTER_ID is undefined');

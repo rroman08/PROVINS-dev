@@ -9,7 +9,7 @@ import { OrderCancelledListener } from './events/listeners/order-cancelled-liste
 // It connects to the database, sets up the NATS client, and starts the express server
 const start = async () => {
 
-  console.log('Starting up Product service...');
+  console.log('Product service starting up...');
   // Check if the required environment variables are set
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY is undefined');

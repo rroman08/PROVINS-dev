@@ -3,6 +3,7 @@ import { randomBytes } from 'crypto';
 
 import { ProductCreatedListener } from './events/product-created-listener';
 
+// Connect test base-listener for prototyping purposes
 console.clear();
 
 const client = nats.connect('provins', randomBytes(4).toString('hex'), {

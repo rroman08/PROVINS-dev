@@ -6,7 +6,7 @@ import { app } from './app';
 // It is responsible for starting the service and connecting to the database
 // It imports the app file and starts the server
 const start = async () => {
-  console.log('Authentication service starting up...');
+  console.log('Authentication service starting up....');
   
   // Check if the environment variables are set
   if (!process.env.JWT_KEY) {

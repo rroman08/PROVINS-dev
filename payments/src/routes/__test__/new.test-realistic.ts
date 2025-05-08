@@ -5,7 +5,9 @@ import { OrderStatus } from '@provins/common';
 import { app } from '../../app';
 import { Order } from '../../models/order';
 import stripe from '../../stripe';
-import e from 'express';
+
+// This version of the same test uses a real Stripe test token
+// and a real stripe charge
 
 it('returns 404 when trying to purchase a non-existing order', async () => {
   await request(app)

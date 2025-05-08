@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+// This is the payment model for the payments service
+
 interface PaymentAttrs {
   orderId: string;
   stripeId: string;

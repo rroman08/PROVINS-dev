@@ -36,7 +36,7 @@ beforeEach(async () => {
   } 
 });
 
-// This ensures that each test starts with a clean state
+
 // This function runs after all tests
 // It stops the MongoMemoryServer and closes the mongoose connection to prevent memory leaks
 afterAll(async () => {

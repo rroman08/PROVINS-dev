@@ -4,8 +4,9 @@ import { OrderStatus } from '@provins/common';
 
 import { app } from '../../app';
 import { Order } from '../../models/order';
-import { Payment } from '../../models/payment';
-import stripe from '../../stripe';
+
+// This version of test creates a mock payment and mock charge
+// and does not use a real Stripe test token and charge
 
 jest.mock('../../stripe');
 

@@ -4,7 +4,7 @@ import { app } from './app';
 
 // This index.ts starts the authentication service and connects to the database
 const start = async () => {
-  console.log('Authentication service starting up...');
+  console.log('Auth service starting up...');
   
   // Check if the environment variables are set
   // JWT_KEY is used for signing JWT tokens
